@@ -21,7 +21,7 @@ Binary: `zig-out/bin/lnd`
 zig build -Doptimize=ReleaseSmall
 ```
 
-Debug (`zig build`): ~17 MB → ReleaseSmall: ~225 KB (~98% smaller).
+Debug (`zig build`): ~16 MB → ReleaseSmall: ~223 KB (~99% smaller).
 
 ## Usage
 
