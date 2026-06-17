@@ -18,8 +18,10 @@ Binary: `zig-out/bin/lnd`
 ### Minimal binary size
 
 ```sh
-zig build -Doptimize=ReleaseSmall --strip
+zig build -Doptimize=ReleaseSmall
 ```
+
+Debug (`zig build`): ~17 MB → ReleaseSmall: ~225 KB (~98% smaller).
 
 ## Usage
 
