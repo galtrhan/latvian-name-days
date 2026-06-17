@@ -21,6 +21,7 @@ pub fn build(b: *std.Build) void {
         .name = "lnd",
         .root_module = mod,
     });
+    mod.linkSystemLibrary("c", .{});
 
     b.installArtifact(exe);
 

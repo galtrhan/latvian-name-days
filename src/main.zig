@@ -6,6 +6,22 @@ const ManagedArrayList = std.array_list.AlignedManaged;
 
 const embedded = @import("data");
 
+extern fn localtime_r(time: *const i64, result: *LibcTm) ?*LibcTm;
+
+const LibcTm = extern struct {
+    tm_sec: c_int,
+    tm_min: c_int,
+    tm_hour: c_int,
+    tm_mday: c_int,
+    tm_mon: c_int,
+    tm_year: c_int,
+    tm_wday: c_int,
+    tm_yday: c_int,
+    tm_isdst: c_int,
+    tm_gmtoff: c_long,
+    tm_zone: ?*u8,
+};
+
 const Entry = struct {
     month: u8,
     day: u8,
@@ -28,28 +44,19 @@ const month_names = [_][]const u8{
     "JŪLIJS", "AUGUSTS", "SEPTEMBRIS", "OKTOBRIS", "NOVEMBRIS", "DECEMBRIS",
 };
 
-fn epochToDate(epoch: i64) Date {
-    const z = @divFloor(epoch, 86400) + 719468;
-    const era = @divFloor(z, 146097);
-    const doe = @as(u32, @intCast(z - era * 146097));
-    const yoe = (doe - @divFloor(doe, 1460) + @divFloor(doe, 36524) - @divFloor(doe, 146096)) / 365;
-    const y = yoe + era * 400;
-    const doy = doe - (365 * yoe + @divFloor(yoe, 4) - @divFloor(yoe, 100));
-    const mp = (doy * 5 + 2) / 153;
-    const d = doy - (mp * 153 + 2) / 5 + 1;
-    const m = if (mp < 10) mp + 3 else mp - 9;
-    const year: u16 = if (m <= 2) @intCast(y + 1) else @intCast(y);
-
-    const day_seconds = @mod(epoch, 86400);
-    const hour = @divFloor(day_seconds, 3600);
-    const minute = @mod(@divFloor(day_seconds, 60), 60);
-
+fn today() Date {
+    var ts: std.os.linux.timespec = undefined;
+    _ = std.os.linux.clock_gettime(std.os.linux.CLOCK.REALTIME, &ts);
+    const epoch = @as(i64, @bitCast(ts.sec));
+    var t: LibcTm = undefined;
+    var epoch_copy = epoch;
+    _ = localtime_r(&epoch_copy, &t);
     return .{
-        .year = year,
-        .month = @intCast(m),
-        .day = @intCast(d),
-        .hour = @intCast(hour),
-        .minute = @intCast(minute),
+        .year = @intCast(t.tm_year + 1900),
+        .month = @intCast(t.tm_mon + 1),
+        .day = @intCast(t.tm_mday),
+        .hour = @intCast(t.tm_hour),
+        .minute = @intCast(t.tm_min),
     };
 }
 
@@ -287,7 +294,7 @@ pub fn main(init: std.process.Init) !void {
     const entries = try loadEntries(alloc, io, init.environ_map);
     defer entries.deinit();
 
-    const date = custom_date orelse epochToDate(std.Io.Clock.real.now(io).toSeconds());
+    const date = custom_date orelse today();
 
     const names = lookup(entries.items, date.month, date.day) orelse "\u{2014}";
 
