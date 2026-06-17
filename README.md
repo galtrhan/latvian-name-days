@@ -1,4 +1,4 @@
-# lnd — Latvju Name Dienas
+# Latvian Name Days
 
 CLI tool for looking up Latvian name days.
 
@@ -14,6 +14,12 @@ zig build
 ```
 
 Binary: `zig-out/bin/lnd`
+
+### Minimal binary size
+
+```sh
+zig build -Doptimize=ReleaseSmall --strip
+```
 
 ## Usage
 
