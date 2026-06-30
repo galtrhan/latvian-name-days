@@ -4,40 +4,61 @@ CLI tool for looking up Latvian name days.
 
 ## Requirements
 
-- [Zig](https://ziglang.org/) (to build)
+- [Odin](https://odin-lang.org/) (to build)
 - `curl` (at runtime, to fetch data from VVC)
 
 ## Build
 
 ```sh
-zig build
+make
 ```
 
-Binary: `zig-out/bin/lnd`
+Binary: `dist/lnd`
 
-### Minimal binary size
+Install to `~/.local/bin`:
 
 ```sh
-zig build -Doptimize=ReleaseSmall
+make install
 ```
 
-Debug (`zig build`): ~16 MB → ReleaseSmall: ~223 KB (~99% smaller).
+### Build flags
+
+The Makefile builds with size optimization:
+
+```sh
+odin build . -out:dist/lnd -o:size -disable-assert \
+  '-extra-linker-flags:-s -Wl,--gc-sections'
+```
+
+Release size: ~260 KB.
 
 ## Usage
 
 ```sh
 # Today's name days
-lnd
+dist/lnd
 
 # Specific date
-lnd -d 2026-05-22
+dist/lnd -d 2026-05-22
 
 # Refresh cached data from VVC
-lnd --update
+dist/lnd --update
 ```
 
 ## Data source
 
 Name lists are fetched from the [VVC](https://www.vvc.gov.lv/lv/latviesu-tradicionalo-kalendarvardu-saraksts)
-(Latvian State Language Center) and cached locally (`~/.cache/lnd/namedays.json`, 30-day TTL).
-If the network is unavailable, built-in data is used as fallback.
+(Latvian State Language Center) and cached locally as CSV (`~/.cache/lnd/namedays.csv`, 30-day TTL).
+If the cache is missing, expired, or the network is unavailable, built-in data is used as fallback.
+
+### Cache format
+
+```
+version=1
+cached_at=1700000000
+---
+1|1|Laimnesis, Solvita, Solvija
+6|24|Jānis
+```
+
+Fields are pipe-separated so name lists can contain commas.
