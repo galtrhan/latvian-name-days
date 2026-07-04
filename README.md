@@ -62,3 +62,7 @@ cached_at=1700000000
 ```
 
 Fields are pipe-separated so name lists can contain commas.
+
+## Other implementation
+
+A Zig version lives on the `main` branch. See [vs.md](vs.md) for a side-by-side comparison.
