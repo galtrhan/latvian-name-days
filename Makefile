@@ -1,4 +1,4 @@
-.PHONY: all build install clean run mirror
+.PHONY: all build install clean run
 
 ODIN      ?= odin
 OUT_DIR   := dist
@@ -21,9 +21,3 @@ run: build
 
 clean:
 	rm -rf $(OUT_DIR)
-
-# Push branches to GitHub mirror (Codeberg remains primary via origin).
-mirror:
-	git push github main
-	git push github odin
-
