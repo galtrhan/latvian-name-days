@@ -4,7 +4,7 @@ CLI tool for looking up Latvian name days.
 
 ## Requirements
 
-- [Odin](https://odin-lang.org/) (to build)
+- A C compiler (`cc` / gcc / clang)
 - `curl` (at runtime, to fetch data from VVC)
 
 ## Build
@@ -26,11 +26,11 @@ make install
 The Makefile builds with size optimization:
 
 ```sh
-odin build . -out:dist/lnd -o:size -disable-assert \
-  '-extra-linker-flags:-s -Wl,--gc-sections'
+cc -O2 -s -ffunction-sections -fdata-sections lnd.c data.c -o dist/lnd \
+  -Wl,--gc-sections
 ```
 
-Release size: ~260 KB.
+Release size: ~47 KB.
 
 ## Usage
 
@@ -63,6 +63,12 @@ cached_at=1700000000
 
 Fields are pipe-separated so name lists can contain commas.
 
-## Other implementation
+## Other implementations
 
-A Zig version lives on the `main` branch. See [vs.md](vs.md) for a side-by-side comparison.
+| Language | Branch |
+|---|---|
+| Zig | `main` |
+| Odin | `odin` |
+| C | `c` (this branch) |
+
+See [vs.md](vs.md) for a side-by-side comparison.

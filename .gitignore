@@ -1,5 +1,7 @@
 # Build output
 dist/
 
-# Odin build artifacts
+# C build artifacts
+*.o
+*.obj
 *.dSYM/
