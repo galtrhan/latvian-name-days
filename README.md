@@ -42,6 +42,12 @@ Name lists are fetched from the [VVC](https://www.vvc.gov.lv/lv/latviesu-tradici
 (Latvian State Language Center) and cached locally (`~/.cache/lnd/namedays.json`, 30-day TTL).
 If the network is unavailable, built-in data is used as fallback.
 
-## Other implementation
+## Other implementations
 
-An Odin version lives on the `odin` branch. See [vs.md](vs.md) for a side-by-side comparison.
+| Language | Branch |
+|---|---|
+| Zig | `main` (this branch) |
+| Odin | `odin` |
+| C | `c` |
+
+See [vs.md](vs.md) for a side-by-side comparison.
