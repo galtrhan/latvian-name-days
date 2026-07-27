@@ -1,6 +1,6 @@
 # Latvian Name Days
 
-CLI tool for looking up Latvian name days.
+`lnd` looks up Latvian name days from the command line.
 
 ## Requirements
 
@@ -21,7 +21,7 @@ Binary: `zig-out/bin/lnd`
 zig build -Doptimize=ReleaseSmall
 ```
 
-Debug (`zig build`): ~16 MB → ReleaseSmall: ~223 KB (~99% smaller).
+A debug build (`zig build`) is about 16 MB. A `ReleaseSmall` build is about 223 KB (about 99% smaller).
 
 ## Usage
 
@@ -38,9 +38,9 @@ lnd --update
 
 ## Data source
 
-Name lists are fetched from the [VVC](https://www.vvc.gov.lv/lv/latviesu-tradicionalo-kalendarvardu-saraksts)
-(Latvian State Language Center) and cached locally (`~/.cache/lnd/namedays.json`, 30-day TTL).
-If the network is unavailable, built-in data is used as fallback.
+The tool fetches name lists from the [VVC](https://www.vvc.gov.lv/lv/latviesu-tradicionalo-kalendarvardu-saraksts)
+(Latvian State Language Center). It stores them locally (`~/.cache/lnd/namedays.json`, 30-day TTL).
+If the network is unavailable, the tool uses built-in data.
 
 ## Other implementations
 
@@ -50,4 +50,4 @@ If the network is unavailable, built-in data is used as fallback.
 | Odin | `odin` |
 | C | `c` |
 
-See [vs.md](vs.md) for a side-by-side comparison.
+See [vs.md](vs.md) for a comparison of the three versions.
