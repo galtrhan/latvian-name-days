@@ -1,6 +1,6 @@
 # Latvian Name Days
 
-CLI tool for looking up Latvian name days.
+`lnd` looks up Latvian name days from the command line.
 
 ## Requirements
 
@@ -15,7 +15,7 @@ make
 
 Binary: `dist/lnd`
 
-Install to `~/.local/bin`:
+Install the binary to `~/.local/bin`:
 
 ```sh
 make install
@@ -23,14 +23,14 @@ make install
 
 ### Build flags
 
-The Makefile builds with size optimization:
+The Makefile builds for a small binary:
 
 ```sh
 odin build . -out:dist/lnd -o:size -disable-assert \
   '-extra-linker-flags:-s -Wl,--gc-sections'
 ```
 
-Release size: ~260 KB.
+Release size: about 260 KB.
 
 ## Usage
 
@@ -47,9 +47,9 @@ dist/lnd --update
 
 ## Data source
 
-Name lists are fetched from the [VVC](https://www.vvc.gov.lv/lv/latviesu-tradicionalo-kalendarvardu-saraksts)
-(Latvian State Language Center) and cached locally as CSV (`~/.cache/lnd/namedays.csv`, 30-day TTL).
-If the cache is missing, expired, or the network is unavailable, built-in data is used as fallback.
+The tool fetches name lists from the [VVC](https://www.vvc.gov.lv/lv/latviesu-tradicionalo-kalendarvardu-saraksts)
+(Latvian State Language Center). It stores them locally as CSV (`~/.cache/lnd/namedays.csv`, 30-day TTL).
+If the cache is missing, expired, or the network is unavailable, the tool uses built-in data.
 
 ### Cache format
 
@@ -61,7 +61,7 @@ cached_at=1700000000
 6|24|Jānis
 ```
 
-Fields are pipe-separated so name lists can contain commas.
+Fields use pipe separators so name lists can contain commas.
 
 ## Other implementations
 
@@ -71,4 +71,4 @@ Fields are pipe-separated so name lists can contain commas.
 | Odin | `odin` (this branch) |
 | C | `c` |
 
-See [vs.md](vs.md) for a side-by-side comparison.
+See [vs.md](vs.md) for a comparison of the three versions.
