@@ -1,6 +1,6 @@
 # Zig vs Odin vs C
 
-Side-by-side comparison of the three implementations of `lnd`.
+This page compares the three `lnd` implementations.
 
 | | **Zig** (`main`) | **Odin** (`odin`) | **C** (`c`) |
 |---|---|---|---|
@@ -10,7 +10,7 @@ Side-by-side comparison of the three implementations of `lnd`.
 | Release size | ~223 KB | ~259 KB | ~47 KB |
 | Cache file | `~/.cache/lnd/namedays.json` | `~/.cache/lnd/namedays.csv` | `~/.cache/lnd/namedays.csv` |
 
-All three share the same CLI, embedded fallback data, VVC `--update` fetch, and 30-day cache TTL.
+The three versions use the same CLI, embedded fallback data, VVC `--update` fetch, and 30-day cache TTL.
 
 ## Source size
 
@@ -29,11 +29,11 @@ Per file:
 | `src/main.zig` / `lnd.odin` / `lnd.c` | 306 / 361 / 518 | 1,071 / 1,136 / 1,743 | 9.8 KB / 8.6 KB / 11.6 KB |
 | `src/data.zig` / `data.odin` / `data.c` | 374 / 375 / 373 | 4,710 / 3,967 / 1,785 | 25.0 KB / 21.7 KB / 13.9 KB |
 
-Zig also has `build.zig` (34 lines, 0.9 KB). Odin and C use a `Makefile` instead. C also has `data.h` (17 lines).
+Zig also includes `build.zig` (34 lines, 0.9 KB). Odin and C use a `Makefile` instead. C also includes `data.h` (17 lines).
 
 ## Binary size
 
-Measured on Linux x86_64 with size-optimized release builds:
+Sizes are from Linux x86_64 with size-optimized release builds:
 
 | Build | Size |
 |---|---:|
@@ -41,11 +41,11 @@ Measured on Linux x86_64 with size-optimized release builds:
 | Odin `-o:size -disable-assert` + strip + `--gc-sections` | 259 KB |
 | C `-O2 -s` + `--gc-sections` | 47 KB |
 
-C is the smallest by a wide margin (~5× smaller than Zig, ~5.5× smaller than Odin).
+C is the smallest (~5× smaller than Zig, ~5.5× smaller than Odin).
 
 ## Runtime
 
-Lookup is effectively instant for all three (~1 ms, dominated by process startup). None are I/O-bound for normal use.
+Lookup takes about 1 ms for all three. Process startup uses most of that time. Normal use is not I/O-bound.
 
 ## Differences
 
