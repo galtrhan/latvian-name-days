@@ -49,5 +49,6 @@ If the network is unavailable, the tool uses built-in data.
 | Zig | `main` (this branch) |
 | Odin | `odin` |
 | C | `c` |
+| TypePHP | `php` |
 
-See [vs.md](vs.md) for a comparison of the three versions.
+See [vs.md](vs.md) for a comparison of the four versions.
