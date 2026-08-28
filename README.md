@@ -70,5 +70,6 @@ Fields use pipe separators so name lists can contain commas.
 | Zig | `main` |
 | Odin | `odin` (this branch) |
 | C | `c` |
+| TypePHP | `php` |
 
-See [vs.md](vs.md) for a comparison of the three versions.
+See [vs.md](vs.md) for a comparison of the four versions.
